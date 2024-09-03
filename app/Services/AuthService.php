@@ -22,19 +22,18 @@ class AuthService
     {
         return User::query()
             ->create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'password' => Hash::make($this->password),
-                'phone_number' => $this->phoneNumber,
-                'address_id' => $this->addressId
+                'name' => $this->getName(),
+                'email' => $this->getEmail(),
+                'password' => Hash::make($this->getPassword()),
+                'phone_number' => $this->getPhoneNumber(),
+                'address_id' => $this->getAddressId()
             ]);
     }
 
-    public function login()
+    public function login() :array
     {
         $user = User::where('email', $this->getEmail())->first();
-
-        if (!$user || !Hash::check($this->getEmail(), $user->password)) {
+        if (!$user || !Hash::check($this->getPassword(), $user->password)) {
             throw new loginException('The provided credentials are incorrect.',403);
         }
         $token = $user->createToken('auth-token')->plainTextToken;
