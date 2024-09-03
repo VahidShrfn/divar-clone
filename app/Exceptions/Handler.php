@@ -26,5 +26,8 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        $this->renderable(function (loginException $e){
+            return response()->json(__($e->message),$e->code);
+        });
     }
 }
