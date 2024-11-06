@@ -20,7 +20,7 @@ class AuthService
     }
     public function register()
     {
-        return User::query()
+        $user = User::query()
             ->create([
                 'name' => $this->getName(),
                 'email' => $this->getEmail(),
@@ -28,6 +28,11 @@ class AuthService
                 'phone_number' => $this->getPhoneNumber(),
                 'address_id' => $this->getAddressId()
             ]);
+        $token = $user->createToken('auth-token')->plainTextToken;
+        return [
+            'user' => $user,
+            'token' => $token
+        ];
     }
 
     public function login() :array
