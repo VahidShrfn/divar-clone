@@ -10,7 +10,7 @@ class AddProductController extends Controller
     public function create(Request $request)
     {
         $product = UserProductService::make()
-            -setContents($request->contents)
+            ->setContents($request->contents)
             ->setUser($this->user())
             ->setName($request->name)
             ->setDescription($request->description)

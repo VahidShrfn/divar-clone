@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingAddressController;
 use App\Http\Controllers\SettingCategoryController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,15 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    Route::prefix('add-product')
-        ->controller(AddProductController::class)
-        ->group(function (){
-            Route::post('/','create');
-            Route::get('/','get');
-            Route::get('/{id}','show');
-            Route::patch('/{id}','updatePrice');
-        });
+Route::middleware('auth:sanctum')
+    ->group( function (){
+        Route::prefix('add-product')
+            ->controller(AddProductController::class)
+            ->group(function (){
+                Route::post('/','create');
+                Route::get('/','get');
+                Route::get('/{id}','show');
+                Route::patch('/{id}','updatePrice');
+            });
 });
 Route::prefix('auth')
     ->controller(AuthController::class)->group(function () {
@@ -54,11 +54,5 @@ Route::prefix('settings')
             ->group(function (){
                 Route::get('/','get');
             });
-    });
-Route::prefix('products')
-    ->controller(ProductController::class)
-    ->group(function (){
-        Route::get('/','get');
-        Route::get('/{id}','show');
     });
 

@@ -143,7 +143,7 @@ class UserProductService
         return $this;
     }
 
-    public function contents($contents)
+    public function setContents($contents)
     {
         $this->contents = $contents;
         return $this;
